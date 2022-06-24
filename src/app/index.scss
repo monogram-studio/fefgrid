@@ -1,0 +1,48 @@
+@use 'sass:math';
+@use 'monogramstudio-fefcore/src/app' as fefcore;
+@use 'monogramstudio-fefbreakpoint/src/app' as fefbreakpoint;
+
+$grid-columns: 12 !default;
+
+.grid-flex {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.col {
+  min-height: 1px;
+  width: 100%;
+}
+
+@each $key, $value in fefbreakpoint.$breakpoints {
+  @if ($key != xs) {
+    @include fefbreakpoint.bp($key) {
+      @for $i from 1 through $grid-columns {
+        @if (fefcore.decimal-round((math.div($i, $grid-columns) * 100), 2) * math.div($grid-columns, $i) > 100) {
+          .col--#{$key}-#{$i} {
+            width: #{fefcore.decimal-round(math.div($i, $grid-columns) * 100%, 2) - 0.01};
+          }
+        } @else {
+          .col--#{$key}-#{$i} {
+            width: #{fefcore.decimal-round(math.div($i, $grid-columns) * 100%, 2)};
+          }
+        }
+      }
+    }
+  } @else {
+    @for $i from 1 through $grid-columns {
+      @if (fefcore.decimal-round((math.div($i, $grid-columns) * 100), 2) * math.div($grid-columns, $i) > 100) {
+        .col--#{$key}-#{$i} {
+          width: #{fefcore.decimal-round(math.div($i, $grid-columns) * 100%, 2) - 0.01};
+        }
+      } @else {
+        .col--#{$key}-#{$i} {
+          width: #{fefcore.decimal-round(math.div($i, $grid-columns) * 100%, 2)};
+        }
+      }
+    }
+  }
+}

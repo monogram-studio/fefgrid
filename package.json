@@ -1,0 +1,9 @@
+{
+  "name": "monogramstudio-fefgrid",
+  "author": "Monogram studio",
+  "version": "0.1.0",
+  "dependencies": {
+    "monogramstudio-fefcore": "github:monogramstudio/fefcore",
+    "monogramstudio-fefbreakpoint": "github:monogramstudio/fefbreakpoint"
+  }
+}
