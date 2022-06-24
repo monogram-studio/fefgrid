@@ -1,8 +1,15 @@
 @use 'sass:math';
 @use 'monogramstudio-fefcore/src/app' as fefcore;
-@use 'monogramstudio-fefbreakpoint/src/app' as fefbreakpoint;
+$breakpoints-overrides: null !default;
+@use 'monogramstudio-fefbreakpoint/src/app' as fefbreakpoint with (
+  $breakpoints: $breakpoints-overrides,
+);
 
 $grid-columns: 12 !default;
+$breakpoints: fefbreakpoint.$breakpoints !default;
+@if ($breakpoints-overrides != null) {
+  $breakpoints: $breakpoints-overrides;
+}
 
 .grid-flex {
   display: flex;
@@ -17,7 +24,7 @@ $grid-columns: 12 !default;
   width: 100%;
 }
 
-@each $key, $value in fefbreakpoint.$breakpoints {
+@each $key, $value in $breakpoints {
   @if ($key != xs) {
     @include fefbreakpoint.bp($key) {
       @for $i from 1 through $grid-columns {
